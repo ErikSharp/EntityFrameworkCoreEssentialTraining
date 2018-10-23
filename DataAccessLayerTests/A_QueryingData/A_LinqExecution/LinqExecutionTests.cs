@@ -23,11 +23,16 @@ namespace DataAccessLayerTests.A_QueryingData.A_LinqExecution
         [Fact]
         public void LinqNeverExecutesWithoutIteratingValues()
         {
+            var query = _context.Product;
+            var foo = "foo";
         }
 
         [Fact]
         public void LinqExecutesOnToList()
         {
+            var query = _context.Product;
+            var results = query.ToList();
+            Assert.True(results.Count > 1);
         }
     }
 }

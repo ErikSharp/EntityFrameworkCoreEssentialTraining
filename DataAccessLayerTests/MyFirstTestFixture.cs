@@ -26,5 +26,17 @@ namespace DataAccessLayerTests
             Assert.Equal("hello", _phrase);
             Assert.Equal("Hello", _phrase, ignoreCase: true);
         }
+
+        [Theory]
+        [InlineData(4, "Goodbye")]
+        public void AllShouldBeResetWithEachTest(int number, string saying)
+        {
+            Assert.Equal(0, _counter);
+            _counter += number;
+            Assert.Equal(number, _counter);
+            Assert.Equal("hello", _phrase);
+            _phrase = saying;
+            Assert.Equal(saying, _phrase);
+        }
     }
 }

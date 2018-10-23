@@ -93,8 +93,11 @@ namespace DataAccessLayer.EfStructures.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AdventureWorks2016;Integrated Security=True");
+                var connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=AdventureWorks2016;Integrated Security=True";
+
+                optionsBuilder
+                    .UseLoggerFactory(AppLoggerFactory)
+                    .UseSqlServer(connectionString);
             }
         }
 
