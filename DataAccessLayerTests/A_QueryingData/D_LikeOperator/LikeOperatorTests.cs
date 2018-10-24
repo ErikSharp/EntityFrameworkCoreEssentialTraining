@@ -25,11 +25,23 @@ namespace DataAccessLayerTests.A_QueryingData.D_LikeOperator
         [Fact]
         public void ShouldGetProductsWithoutUsingLikeOperator()
         {
+            var products = _context.Product
+                .Where(p => p.Name.Contains("Crankarm"))
+                .ToList();
+
+            Assert.Equal(3, products.Count);
         }
 
         [Fact]
         public void ShouldGetProductsUsingLikeOperator()
         {
+            //EF.Functions are for provider (SQL Server) specific functions 
+            //This will actually create a query that uses LIKE
+            var products = _context.Product
+                .Where(p => EF.Functions.Like(p.Name, "%Crankarm%"))
+                .ToList();
+
+            Assert.Equal(3, products.Count);
         }
     }
 }

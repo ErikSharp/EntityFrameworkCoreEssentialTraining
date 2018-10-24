@@ -103,6 +103,8 @@ namespace DataAccessLayer.EfStructures.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            AddModelCreatingConfiguration(modelBuilder);
+
             modelBuilder.Entity<Address>(entity =>
             {
                 entity.HasIndex(e => e.Rowguid)

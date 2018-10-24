@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using DataAccessLayer.EfStructures.Context;
 using DataAccessLayer.EfStructures.Extensions;
@@ -24,7 +25,8 @@ namespace DataAccessLayerTests.A_QueryingData.A_LinqExecution
         public void LinqNeverExecutesWithoutIteratingValues()
         {
             var query = _context.Product;
-            var foo = "foo";
+            //nothing will happen
+            Debugger.Break();
         }
 
         [Fact]

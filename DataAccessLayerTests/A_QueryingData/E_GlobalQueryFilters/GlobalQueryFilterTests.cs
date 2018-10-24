@@ -19,14 +19,19 @@ namespace DataAccessLayerTests.A_QueryingData.E_GlobalQueryFilters
         {
             _context.Dispose();
         }
-        //TODO: Add QueryFilter to AdventureWorksContext
+
         [Fact]
         public void ShouldNotBringRecordsBackWithSellEndDate()
         {
+            var prodList = _context.Product.ToList();
+            Assert.Equal(406, prodList.Count);
         }
+
         [Fact]
         public void ShouldBringAllRecordsBack()
         {
+            var prodList = _context.Product.IgnoreQueryFilters().ToList();
+            Assert.Equal(504, prodList.Count);
         }
     }
 }
