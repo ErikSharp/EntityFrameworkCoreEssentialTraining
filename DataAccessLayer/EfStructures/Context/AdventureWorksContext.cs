@@ -1,6 +1,7 @@
 ﻿using System;
 using DataAccessLayer.EfStructures.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DataAccessLayer.EfStructures.Context
@@ -97,7 +98,11 @@ namespace DataAccessLayer.EfStructures.Context
 
                 optionsBuilder
                     .UseLoggerFactory(AppLoggerFactory)
-                    .UseSqlServer(connectionString);
+                    .UseSqlServer(connectionString)
+                    .ConfigureWarnings(warnings =>
+                    {
+                        warnings.Throw(RelationalEventId.QueryClientEvaluationWarning);
+                    });
             }
         }
 

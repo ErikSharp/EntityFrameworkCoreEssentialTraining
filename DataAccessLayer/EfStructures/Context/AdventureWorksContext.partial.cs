@@ -1,15 +1,23 @@
 ﻿using DataAccessLayer.EfStructures.Entities;
+using DataAccessLayer.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DataAccessLayer.EfStructures.Context
 {
     public partial class AdventureWorksContext
     {
+        [NotMapped]
+        public DbSet<ProductViewModel> ProductViewModel { get; set; }
+
+        [NotMapped]
+        public DbSet<WhereUsedViewModel> WhereUsedViewModel { get; set; }
+
         public static readonly LoggerFactory AppLoggerFactory =
             new LoggerFactory(new[] 
             {

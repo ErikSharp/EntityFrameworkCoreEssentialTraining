@@ -24,20 +24,40 @@ namespace DataAccessLayerTests.B_AdvancedQueries.A_RawSqlWithLinq
             _context.Dispose();
         }
 
-        //TODO: Add WhereUsedViewModel to DbContext as notmapped
         [Fact]
         public void ShouldGetViewModelWithSimpleOrderedParameters()
         {
+            List<WhereUsedViewModel> vmList =
+                _context.WhereUsedViewModel
+                    .FromSql("execute dbo.uspGetWhereUsedProductID {0}, {1}",
+                    3, new DateTime(2017, 12, 25)).ToList();
+
+            Assert.Equal(100, vmList.Count);
         }
+
         [Fact]
         public void ShouldGetViewModelWithTraditionalNamedParameters()
         {
+            var productId = new SqlParameter("startproductid", 3);
+            var checkDate = new SqlParameter("checkdate", new DateTime(2017, 12, 25));
+
+            List<WhereUsedViewModel> vmList =
+                _context.WhereUsedViewModel
+                    .FromSql("execute dbo.uspGetWhereUsedProductID @StartProductID, @CheckDate", 
+                        productId, checkDate).ToList();
+
+            Assert.Equal(100, vmList.Count);
         }
 
         [Fact]
         public void ShouldGetViewModelWithStringInterpolation()
         {
-        }
+            //I prefer to do it this way
+            List<WhereUsedViewModel> vmList =
+                _context.WhereUsedViewModel
+                .FromSql($"execute dbo.uspGetWhereUsedProductID {3}, {new DateTime(2017, 12, 25)}").ToList();
 
+            Assert.Equal(100, vmList.Count);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DataAccessLayer.EfStructures.Context;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace DataAccessLayerTests.B_AdvancedQueries.B_ClientServerEval
@@ -18,15 +19,20 @@ namespace DataAccessLayerTests.B_AdvancedQueries.B_ClientServerEval
         {
             _context.Dispose();
         }
-        //Add warning as error to onconfiguring
-        [Fact]
-        public void ShouldExecuteClientSide()
-        {
-        }
 
+        
         [Fact]
-        public void ShouldExecuteServerSide()
+        public void ShouldThrowWhenWillExecuteClientSide()
         {
+            //Add warning as error to Context.OnConfiguring
+            //This will cause it to throw whenever EF thinks it is running client side
+
+            var sqlQuery = "execute uspGetAllProducts";
+            Assert.Throws<InvalidOperationException>(
+                () => _context.Product
+                    .FromSql(sqlQuery)
+                    .Where(p => p.ProductId == 749)
+                    .ToList());
         }
 
     }
