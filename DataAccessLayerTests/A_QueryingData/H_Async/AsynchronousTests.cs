@@ -23,6 +23,13 @@ namespace DataAccessLayerTests.A_QueryingData.H_Async
         [Fact]
         public async void ShouldAwaitAsyncQueries()
         {
+            //remember that async doesn't speed up the query execution
+            //it just prevents your other operations from being blocked
+
+            //EF Core doesn't support multiple open operations on a context
+
+            var prodList = await _context.Product.ToListAsync();
+            var product = await _context.Product.FindAsync(3);
         }
     }
 }
