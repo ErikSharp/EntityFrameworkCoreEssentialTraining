@@ -4,6 +4,7 @@ using System.Linq;
 using DataAccessLayer.EfStructures.Context;
 using DataAccessLayer.EfStructures.Entities;
 using DataAccessLayer.EfStructures.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace DataAccessLayerTests.A_QueryingData.C_FilterSortAndPage
@@ -59,7 +60,7 @@ namespace DataAccessLayerTests.A_QueryingData.C_FilterSortAndPage
         [Fact]
         public void FilterWithMultipleStatementWhereClauses()
         {
-            List<Product> prodList = _context.Product.Where(p =>
+            List<Product> prodList = _context.Product.IgnoreQueryFilters().Where(p =>
                 (p.MakeFlag ?? true) && 
                 (p.SellEndDate == null || p.ListPrice < 100M))
             .ToList();
