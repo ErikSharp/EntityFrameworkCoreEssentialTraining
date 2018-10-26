@@ -32,6 +32,16 @@ namespace DataAccessLayer.EfStructures.Context
 
             //Even though this is valid code, it will execute client side as EF doesn't understand it
             //modelBuilder.Entity<Product>().HasQueryFilter(p => !p.SellEndDate.HasValue);
+            
+        }
+
+        //You have to specify the FunctionName in the db if different than GetStock
+        [DbFunction(FunctionName = "ufnGetStock", Schema = "dbo")]
+        public static int GetStock(int productId)
+        {
+            //This should never get run
+            //This method just tells EF about the database function
+            throw new NotImplementedException();
         }
     }
 }

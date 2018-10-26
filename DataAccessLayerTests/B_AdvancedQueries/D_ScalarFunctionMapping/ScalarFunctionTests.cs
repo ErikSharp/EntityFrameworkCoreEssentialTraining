@@ -22,10 +22,19 @@ namespace DataAccessLayerTests.B_AdvancedQueries.D_ScalarFunctionMapping
         {
             _context.Dispose();
         }
-        //TODO: Add Scalar Function Mapping to DbContext
+
         [Fact]
-        public void ShouldUseFunctionInLinq()
+        public void ShouldUseDbFunctionsInLinq()
         {
+            //Notice the static method GetStock AdventureWorksContext.partial
+            //that makes this work by mapping the function in the database
+
+            //This makes the query use a database function so nothing is evaluated client-side
+
+            var prodList = _context.Product
+                .Where(p => AdventureWorksContext.GetStock(p.ProductId) > 4).ToList();
+
+            Assert.Equal(191, prodList.Count);
         }
 
     }
