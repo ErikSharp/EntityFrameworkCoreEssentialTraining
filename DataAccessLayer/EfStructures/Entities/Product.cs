@@ -27,6 +27,7 @@ namespace DataAccessLayer.EfStructures.Entities
 
         [Column("ProductID")]
         public int ProductId { get; set; }
+        [ConcurrencyCheck]
         [Required]
         [Column(TypeName = "Name")]
         [StringLength(50)]
